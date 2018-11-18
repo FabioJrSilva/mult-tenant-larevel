@@ -20,11 +20,14 @@
             </div>
         @endif
 
-        <form action="{{ route('posts.store') }}" method="post">
+        <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
             @csrf
 
             <div class="form-group">
                 <input class="form-control" type="text" name="title" placeholder="Título">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="file" name="image" placeholder="Imagem">
             </div>
             <div class="form-group">
                 <textarea class="form-control" name="body" cols="30" rows="5" placeholder="Descrição"></textarea>
