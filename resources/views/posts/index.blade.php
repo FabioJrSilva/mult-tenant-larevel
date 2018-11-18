@@ -5,7 +5,8 @@
         <h1 >Posts</h1>
 
         @forelse ($posts as $post)
-            <p>{{ $post->title }}</p>
+            <h3>Título: {{ $post->title }}</h3>
+            <p>Descrição: {{ $post->body }}</p>
             <hr>
         @empty
             <p>Nenhum Post...</p>
