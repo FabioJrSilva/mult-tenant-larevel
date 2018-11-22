@@ -8,14 +8,14 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" action="{{ route('register') }}" aria-label="{{ __('Register') }}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">Empresa</label>
+                            <label for="tenant" class="col-md-4 col-form-label text-md-right">Empresa</label>
 
                             <div class="col-md-6">
-                                <input id="tenant" placeholder="Empresa" type="text" class="form-control{{ $errors->has('tenant') ? ' is-invalid' : '' }}" name="tenant" value="{{ old('tenant') }}" required autofocus>
+                                <input id="name" placeholder="Empresa" type="text" class="form-control{{ $errors->has('tenant') ? ' is-invalid' : '' }}" name="tenant" value="{{ old('tenant') }}" required autofocus>
 
                                 @if ($errors->has('tenant'))
                                     <span class="invalid-feedback" role="alert">

@@ -1,40 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" >
-        <h1>Editar Post</h1>
 
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+<h1>Editar Post</h1>
 
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+@include('includes.alerts')
 
-        <form action="{{ route('posts.update', $post->id) }}" method="post">
-            @csrf
+<form action="{{ route('posts.update', $post->id) }}" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_method" value="PUT">
 
-            <input type="hidden" name="_method" value="PUT">
+    @include('posts._partials.form')
+</form>
 
-            <div class="form-group">
-                <input class="form-control" type="text" name="title" placeholder="Título" value="{{ $post->title }}">
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" name="body" cols="30" rows="5" placeholder="Descrição">{{ $post->body }}</textarea>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-success" type="submit">Salvar</button>
-            </div>
-        </form>
-
-    </div>
 @endsection

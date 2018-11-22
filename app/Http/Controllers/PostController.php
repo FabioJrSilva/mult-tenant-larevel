@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Post;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreUpdatePostFormRequest;
-use App\Tenant\ManagerTenant;
+use App\Models\Post;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
@@ -14,7 +14,10 @@ class PostController extends Controller
     public function __construct(Post $post)
     {
         $this->post = $post;
+
+        $this->middleware('auth');
     }
+
 
     /**
      * Display a listing of the resource.
@@ -23,7 +26,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = $this->post->get();
+        $posts = $this->post->with('user.tenant')->latest()->paginate();
 
         return view('posts.index', compact('posts'));
     }
@@ -48,24 +51,27 @@ class PostController extends Controller
     {
         $data = $request->all();
 
-        if($request->hasFile('image') && $request->file('image')->isValid()){
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $name = kebab_case($request->title);
             $extension = $request->image->extension();
             $nameImage = "{$name}.$extension";
             $data['image'] = $nameImage;
 
-            $upload =  $request->image->storeAs('posts', $nameImage);
+            $upload = $request->image->storeAs('posts', $nameImage);
 
-            if(!$upload)
-                return redirect()->back()->with('errors', ['Falha no Upload']);
+            if (!$upload)
+                return redirect()
+                            ->back()
+                            ->with('errors', ['Falha no Upload'])
+                            ->withInput();
         }
 
         $post = $request->user()
-                        ->posts()
-                        ->create($data);
+                            ->posts()
+                            ->create($data);
 
         return redirect()
-                    ->back()
+                    ->route('posts.index')
                     ->withSuccess('Cadastro realizado com sucesso!');
     }
 
@@ -77,7 +83,10 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        if (!$post = $this->post->find($id))
+            return redirect()->back();
+
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -88,7 +97,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = $this->post->find($id);
+        if (!$post = $this->post->find($id))
+            return redirect()->back();
 
         return view('posts.edit', compact('post'));
     }
@@ -102,13 +112,37 @@ class PostController extends Controller
      */
     public function update(StoreUpdatePostFormRequest $request, $id)
     {
-        $post = $this->post->find($id);
+        if (!$post = $this->post->find($id))
+            return redirect()->back()->withInput();
 
-        $post->update($request->all());
+        $data = $request->all();
+
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            // Remove image if exists
+            if ($post->image) {
+                if (Storage::exists("posts/{$post->image}"))
+                    Storage::delete("posts/{$post->image}");
+            }
+
+            $name = kebab_case($request->title);
+            $extension = $request->image->extension();
+            $nameImage = "{$name}.$extension";
+            $data['image'] = $nameImage;
+
+            $upload = $request->image->storeAs('posts', $nameImage);
+
+            if (!$upload)
+                return redirect()
+                            ->back()
+                            ->with('errors', ['Falha no Upload'])
+                            ->withInput();
+        }
+
+        $post->update($data);
 
         return redirect()
-                    ->back()
-                    ->withSuccess('Atualização realizada com sucesso!');
+                    ->route('posts.index')
+                    ->withSuccess('Atualizado com sucesso!');
     }
 
     /**
@@ -119,6 +153,13 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if (!$post = $this->post->find($id))
+            return redirect()->back();
+
+        $post->delete();
+
+        return redirect()
+                    ->route('posts.index')
+                    ->withSuccess('Deletado com sucesso!');
     }
 }
