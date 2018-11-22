@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Http\Requests\StoreUpdatePostFormRequest;
+use App\Tenant\ManagerTenant;
 
 class PostController extends Controller
 {
