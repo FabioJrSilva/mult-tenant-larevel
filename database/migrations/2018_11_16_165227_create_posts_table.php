@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreatePostsTable extends Migration
 {
@@ -23,13 +23,13 @@ class CreatePostsTable extends Migration
             $table->timestamps();
 
             $table->foreign('tenant_id')
-                        ->references('id')
-                        ->on('tenants')
-                        ->onDelete('cascade');
+                ->references('id')
+                ->on('tenants')
+                ->onDelete('cascade');
             $table->foreign('user_id')
-                        ->references('id')
-                        ->on('users')
-                        ->onDelete('cascade');
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
         });
     }

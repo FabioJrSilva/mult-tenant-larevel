@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -33,8 +32,8 @@ class User extends Authenticatable
         return $this->belongsTo(Tenant::class);
     }
 
-     public function posts()
-     {
+    public function posts()
+    {
         return $this->hasMany(Post::class);
-     }
+    }
 }
