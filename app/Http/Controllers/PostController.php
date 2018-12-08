@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreUpdatePostFormRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -17,7 +17,6 @@ class PostController extends Controller
 
         $this->middleware('auth');
     }
-
 
     /**
      * Display a listing of the resource.
@@ -59,11 +58,19 @@ class PostController extends Controller
 
             $upload = $request->image->storeAs('posts', $nameImage);
 
-            if (!$upload)
+            if (!$upload) {
                 return redirect()
+<<<<<<< HEAD
                 ->back()
                 ->with('errors', ['Falha no Upload'])
                 ->withInput();
+=======
+                    ->back()
+                    ->with('errors', ['Falha no Upload'])
+                    ->withInput();
+            }
+
+>>>>>>> 78198289e02de0c8986ebc0dc74d1d403bf6eb16
         }
 
         $post = $request->user()
@@ -83,8 +90,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        if (!$post = $this->post->find($id))
+        if (!$post = $this->post->find($id)) {
             return redirect()->back();
+        }
 
         $pathImage = Storage::url(public_path("storage/app/public/tenants/{$post->user->tenant->uuid}/posts/{$post->image}"));
         return view('posts.show', compact('post', 'pathImage'));
@@ -98,8 +106,9 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        if (!$post = $this->post->find($id))
+        if (!$post = $this->post->find($id)) {
             return redirect()->back();
+        }
 
         return view('posts.edit', compact('post'));
     }
@@ -113,16 +122,19 @@ class PostController extends Controller
      */
     public function update(StoreUpdatePostFormRequest $request, $id)
     {
-        if (!$post = $this->post->find($id))
+        if (!$post = $this->post->find($id)) {
             return redirect()->back()->withInput();
+        }
 
         $data = $request->all();
 
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             // Remove image if exists
             if ($post->image) {
-                if (Storage::exists("posts/{$post->image}"))
+                if (Storage::exists("posts/{$post->image}")) {
                     Storage::delete("posts/{$post->image}");
+                }
+
             }
 
             $name = kebab_case($request->title);
@@ -132,11 +144,19 @@ class PostController extends Controller
 
             $upload = $request->image->storeAs('posts', $nameImage);
 
-            if (!$upload)
+            if (!$upload) {
                 return redirect()
+<<<<<<< HEAD
                 ->back()
                 ->with('errors', ['Falha no Upload'])
                 ->withInput();
+=======
+                    ->back()
+                    ->with('errors', ['Falha no Upload'])
+                    ->withInput();
+            }
+
+>>>>>>> 78198289e02de0c8986ebc0dc74d1d403bf6eb16
         }
 
         $post->update($data);
@@ -154,8 +174,9 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        if (!$post = $this->post->find($id))
+        if (!$post = $this->post->find($id)) {
             return redirect()->back();
+        }
 
         $post->delete();
 

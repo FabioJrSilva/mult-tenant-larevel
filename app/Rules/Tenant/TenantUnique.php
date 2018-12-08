@@ -2,9 +2,9 @@
 
 namespace App\Rules\Tenant;
 
+use App\Tenant\ManagerTenant;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\DB;
-use App\Tenant\ManagerTenant;
 
 class TenantUnique implements Rule
 {
@@ -19,8 +19,8 @@ class TenantUnique implements Rule
      */
     public function __construct($table, $columnValue = null, $column = 'id')
     {
-        $this->table       = $table;
-        $this->column      = $column;
+        $this->table = $table;
+        $this->column = $column;
         $this->columnValue = $columnValue;
     }
 
@@ -36,12 +36,13 @@ class TenantUnique implements Rule
         $tenant = app(ManagerTenant::class)->getTenantIdentify();
 
         $result = DB::table($this->table)
-                ->where($attribute, $value)
-                ->where('tenant_id', $tenant)
-                ->first();
+            ->where($attribute, $value)
+            ->where('tenant_id', $tenant)
+            ->first();
 
-        if($result && $result->{$this->column} == $this->columnValue)
+        if ($result && $result->{$this->column} == $this->columnValue) {
             return true;
+        }
 
         return is_null($result);
     }

@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Tenant\Traits\TenantTrait;
+use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
 
     use TenantTrait;
 
-    protected $fillable = ['title','image', 'body', 'user_id'];
+    protected $fillable = ['title', 'image', 'body', 'user_id'];
 
-     public function user()
-     {
-         return $this->belongsTo(User::class);
-     }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

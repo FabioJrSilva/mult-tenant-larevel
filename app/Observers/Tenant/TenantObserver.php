@@ -2,9 +2,8 @@
 
 namespace App\Observers\Tenant;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Tenant\ManagerTenant;
-
+use Illuminate\Database\Eloquent\Model;
 
 class TenantObserver
 {
