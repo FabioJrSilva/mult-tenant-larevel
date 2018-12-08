@@ -61,18 +61,18 @@ class PostController extends Controller
 
             if (!$upload)
                 return redirect()
-                            ->back()
-                            ->with('errors', ['Falha no Upload'])
-                            ->withInput();
+                ->back()
+                ->with('errors', ['Falha no Upload'])
+                ->withInput();
         }
 
         $post = $request->user()
-                            ->posts()
-                            ->create($data);
+            ->posts()
+            ->create($data);
 
         return redirect()
-                    ->route('posts.index')
-                    ->withSuccess('Cadastro realizado com sucesso!');
+            ->route('posts.index')
+            ->withSuccess('Cadastro realizado com sucesso!');
     }
 
     /**
@@ -86,7 +86,8 @@ class PostController extends Controller
         if (!$post = $this->post->find($id))
             return redirect()->back();
 
-        return view('posts.show', compact('post'));
+        $pathImage = Storage::url(public_path("storage/app/public/tenants/{$post->user->tenant->uuid}/posts/{$post->image}"));
+        return view('posts.show', compact('post', 'pathImage'));
     }
 
     /**
@@ -133,16 +134,16 @@ class PostController extends Controller
 
             if (!$upload)
                 return redirect()
-                            ->back()
-                            ->with('errors', ['Falha no Upload'])
-                            ->withInput();
+                ->back()
+                ->with('errors', ['Falha no Upload'])
+                ->withInput();
         }
 
         $post->update($data);
 
         return redirect()
-                    ->route('posts.index')
-                    ->withSuccess('Atualizado com sucesso!');
+            ->route('posts.index')
+            ->withSuccess('Atualizado com sucesso!');
     }
 
     /**
@@ -159,7 +160,7 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()
-                    ->route('posts.index')
-                    ->withSuccess('Deletado com sucesso!');
+            ->route('posts.index')
+            ->withSuccess('Deletado com sucesso!');
     }
 }

@@ -1,7 +1,7 @@
-@csrf
+@extends('layouts.app') @csrf
 
 <div class="form-group">
-<input value="{{ $post->title ?? old('title') }}" class="form-control" type="text" name="title" placeholder="Título">
+    <input value="{{ $post->title ?? old('title') }}" class="form-control" type="text" name="title" placeholder="Título">
 </div>
 <div class="form-group">
     <input class="form-control" type="file" name="image">
