@@ -60,17 +60,11 @@ class PostController extends Controller
 
             if (!$upload) {
                 return redirect()
-<<<<<<< HEAD
-                ->back()
-                ->with('errors', ['Falha no Upload'])
-                ->withInput();
-=======
                     ->back()
                     ->with('errors', ['Falha no Upload'])
                     ->withInput();
             }
 
->>>>>>> 78198289e02de0c8986ebc0dc74d1d403bf6eb16
         }
 
         $post = $request->user()
@@ -146,17 +140,11 @@ class PostController extends Controller
 
             if (!$upload) {
                 return redirect()
-<<<<<<< HEAD
-                ->back()
-                ->with('errors', ['Falha no Upload'])
-                ->withInput();
-=======
                     ->back()
                     ->with('errors', ['Falha no Upload'])
                     ->withInput();
             }
 
->>>>>>> 78198289e02de0c8986ebc0dc74d1d403bf6eb16
         }
 
         $post->update($data);

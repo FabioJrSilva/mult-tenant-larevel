@@ -12,6 +12,7 @@
  */
 
 Route::resource('posts', 'PostController');
+Route::resource('comments', 'CommentsController');
 
 Route::get('/', function () {
     return view('welcome');

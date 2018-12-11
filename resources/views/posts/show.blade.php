@@ -6,7 +6,6 @@
 @php $pathImage = ($post->image) ? url("storage/tenants/{$post->user->tenant->uuid}/posts/{$post->image}") : url('storage/img/default.png');
 
 @endphp
-
 <form action="{{ route('posts.destroy', $post->id) }}" method="post">
     @csrf
 
@@ -27,10 +26,11 @@
         <div class="form-group">
             <pre class=" form-group">{{ $post->body }}</pre>
             <div>
-                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_method" value="COMMENT">
                 <button type="submit" class="btn btn-danger">Deletar</button>
             </div>
         </div>
     </div>
 </form>
+<a class="btn btn-primary" href="{{ route('comments.index') }}">Comentar</a>
 @endsection
