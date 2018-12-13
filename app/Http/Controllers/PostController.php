@@ -162,6 +162,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
+        // dd($id);
         if (!$post = $this->post->find($id)) {
             return redirect()->back();
         }
