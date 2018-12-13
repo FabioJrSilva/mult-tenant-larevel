@@ -5,6 +5,7 @@
     @include('includes.alerts')
 
 <form action="{{ route('posts.store') }}" method="post" enctype="multipart/form-data">
+    @csrf
     @include('posts._partials.form')
 </form>
 @endsection

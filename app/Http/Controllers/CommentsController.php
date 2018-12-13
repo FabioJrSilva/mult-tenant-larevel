@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Comments;
 
 class CommentsController extends Controller
 {
+    private $comment;
+
+    public function __construct(Comments $comment)
+    {
+        $this->comment = $comment;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,7 +20,7 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        return view('comments.index');
+        return view();
     }
 
     /**
@@ -34,7 +41,15 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->comment == null) {
+            return back()->withErrors('Erro ao criar o comentário!');
+        }
+
+        $comment = $request->all();
+        $comment['user_id'] = auth()->user()->id;
+        Comments::create($comment);
+
+        return back()->withSuccess('Comentário criado com sucesso!');
     }
 
     /**
@@ -45,7 +60,7 @@ class CommentsController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -79,6 +94,11 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = $this->comment->find($id);
+        $comment->delete();
+
+        return redirect()
+            ->back()
+            ->withSuccess('Deletado com sucesso!');
     }
 }
