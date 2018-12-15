@@ -33,7 +33,7 @@
                 <div class="form-control-sm">
                     <a class="btn btn-outline-secondary btn-sm" href="{{ route('posts.show', $post->id) }}">Detalhes</a>
                 </div>
-                @if (auth()->user()->name == "Fabio Jr" || auth()->user()->id == $post->user_id)
+                {{-- @if (auth()->user()->name == "Fabio Jr" || auth()->user()->id == $post->user_id) --}} @if (auth()->user()->id == $post->user_id)
                 <div class="form-control-sm">
                     <a class="btn btn-outline-primary btn-sm" href="{{ route('posts.edit', $post->id) }}">Editar</a>
                 </div>

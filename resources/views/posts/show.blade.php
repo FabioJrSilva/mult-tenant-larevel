@@ -62,12 +62,16 @@
                     <td>{{ $comment->comment}}</td>
                     <td>{{ $comment->user->name}}</td>
                     <td>
+                        @if (auth()->user()->id == $post->user_id)
                         <div>
                             <!-- Button trigger modal comments-delete -->
                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#comment-delete">
                             Deletar
                         </button>
                         </div>
+
+                        @else -- @endif
+
                     </td>
                 </tr>
                 @endforeach
