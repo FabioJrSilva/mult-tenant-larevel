@@ -30,9 +30,12 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('posts.index') }}">
+                <div class="navbar-brand">
                     {{ config('app.name', 'MBA - News') }}
-                </a>
+                </div>
+                <div class="navbar-nav mr-auto">
+                    <a href="{{ route('posts.index') }}" class="nav-link">Home</a>
+                </div>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -62,9 +65,6 @@
                         </li>
                         @else
                         <li class="nav-item dropdown row">
-                            <div>
-                                <a href="{{ url('/') }}" class="nav-link">Home</a>
-                            </div>
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>

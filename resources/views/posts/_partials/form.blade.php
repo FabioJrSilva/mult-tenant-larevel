@@ -5,7 +5,7 @@
     <input class="form-control" type="file" name="image">
 </div>
 <div class="form-group">
-    <textarea class="form-control" name="body" cols="30" rows="5" placeholder="Conteúdo">{{ $post->body ?? old('body') }}</textarea>
+    <textarea class="form-control" name="body" cols="20" rows="5" placeholder="Conteúdo">{{ $post->body ?? old('body') }}</textarea>
 </div>
 <div class="row offset-10">
     <div class="form-control-sm">
