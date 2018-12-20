@@ -18,15 +18,8 @@
                             Comentar
                         </button>
                     </a>
+                    <a class="btn btn-outline-secondary" href="{{ route('posts.index') }}">Voltar</a>
                 </li>
-                {{-- @if (auth()->user()->name == "Fabio Jr" || auth()->user()->id == $post->user_id)
-                <li class="nav-item">
-                    <a class="nav-link btn-outline-primary" href="{{ route('posts.edit', $post->id) }}">Editar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn-outline-danger" href="{{ route('posts.show', $post->id) }}">Deletar</a>
-                </li>
-                @endif --}}
             </ul>
         </div>
         <div class="card-body">
@@ -58,15 +51,19 @@
                         <td>{{ $comment->comment}}</td>
                         <td>{{ $comment->user->name}}</td>
                         <td>
-                            @if (auth()->user()->id == $post->user_id)
+                            @if (auth()->user()->name == "Fabio Jr" || auth()->user()->id == $comment->user_id)
                             <div>
+                                <!-- Button trigger modal comments-update -->
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#comment-update">
+                                    Editar
+                                </button>
+
                                 <!-- Button trigger modal comments-delete -->
                                 <button type="button" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#comment-delete">
-                            Deletar
-                        </button>
+                                    Deletar
+                                </button>
                             </div>
-
-                            @else -- @endif
+                            @endif
 
                         </td>
                     </tr>
@@ -82,7 +79,7 @@
     </div>
 </form>
 
-<!-- Modal Cooments - Create -->
+<!-- Modal Comments - Create -->
 <div class="modal fade" id="comment" tabindex="-1" role="dialog" aria-labelledby="commentLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -130,6 +127,35 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
                     <button type="submit" class="btn btn-outline-danger">Deletar</button>
+                </div>
+            </form>
+            @endif
+        </div>
+    </div>
+</div>
+
+<!-- Modal Comments - Update -->
+
+<div class="modal fade" id="comment-update" tabindex="-1" role="dialog" aria-labelledby="commentLabel-update" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="commentLabel-update"> Editar comentário</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+            </div>
+            @if ($post->comments->count())
+            <form action="{{ route('comments.update',$comment->id) }}" method="post" enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" name="_method" value="put">
+                <div class="modal-body">
+                    <textarea name="comment" id="" cols="43" rows="3">{{ $comment->comment }}</textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-outline-primary">Editar</button>
                 </div>
             </form>
             @endif

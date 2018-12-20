@@ -65,7 +65,7 @@ class LoginController extends Controller
                 return redirect()->route('home');
             }
 
-            return redirect()->with('error', 'Usuário não cadastrado');
+            return redirect()->back()->withErrors('Usuário não encontrado!');
 
         } catch (Exception $e) {
             return Redirect::to('auth/github');

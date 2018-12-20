@@ -39,7 +39,7 @@
                     <a class="nav-link btn-outline-primary" href="{{ route('posts.edit', $post->id) }}">Editar</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn-outline-danger" href="{{ route('posts.show', $post->id) }}">Deletar</a>
+                    <a class="nav-link btn-outline-danger" href="" data-toggle="modal" data-target="#post-delete">Deletar</a>
                 </li>
                 @endif
             </ul>
@@ -61,6 +61,32 @@
         <p>Nenhuma notícia cadastrada!</p>
     </div>
     @endforelse {!! $posts->links() !!}
+</div>
 
+<div class="modal fade" id="post-delete" tabindex="-1" role="dialog" aria-labelledby="postLabel-delete" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="commentLabel-delete"> Deseja realmente deletar? </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            @if ($posts->count())
+            <form action="{{ route('posts.destroy',$post->id) }}" method="post" enctype="multipart/form-data">
+                @csrf
+
+                <input type="hidden" name="_method" value="delete">
+                <div class="modal-body">
+                    <div name="post" id="" cols="43" rows="3">{{ $post->body }}</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-outline-danger">Deletar</button>
+                </div>
+            </form>
+            @endif
+        </div>
+    </div>
 </div>
 @endsection

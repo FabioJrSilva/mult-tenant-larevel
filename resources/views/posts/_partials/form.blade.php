@@ -8,10 +8,8 @@
     <textarea class="form-control" name="body" cols="20" rows="5" placeholder="Conteúdo">{{ $post->body ?? old('body') }}</textarea>
 </div>
 <div class="row offset-10">
-    <div class="form-control-sm">
-        <a class="btn btn-outline-secondary btn-sm" href="{{ route('posts.index') }}">Voltar</a>
-    </div>
-    <div class="form-control-sm">
-        <button type="submit" class="btn btn-success btn-sm">Enviar</button>
+    <div>
+        <a class="btn btn-outline-secondary" href="{{ route('posts.index') }}">Voltar</a>
+        <button type="submit" class="btn btn-outline-success">Enviar</button>
     </div>
 </div>

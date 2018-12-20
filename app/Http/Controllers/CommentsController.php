@@ -83,7 +83,15 @@ class CommentsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (!$request->comment) {
+            return redirect()
+                ->back()
+                ->withErrors('O comentário não pode estar vazio!');
+        }
+
+        $comment = $this->comment->find($id);
+        $comment->update($request->all());
+        return redirect()->back()->withSuccess('Comentário Atualizado com Sucesso!');
     }
 
     /**

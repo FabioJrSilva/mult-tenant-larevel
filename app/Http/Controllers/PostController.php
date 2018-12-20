@@ -25,7 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = $this->post->with('user.tenant', 'comments')->latest()->paginate();
+        $posts = $this->post->with('user.tenant', 'comments')->latest()->paginate(10);
 
         // dd($posts);
         return view('posts.index', compact('posts'));
@@ -171,7 +171,7 @@ class PostController extends Controller
         $post->delete();
 
         return redirect()
-            ->route('posts.index')
+            ->back()
             ->withSuccess('Deletado com sucesso!');
     }
 }
